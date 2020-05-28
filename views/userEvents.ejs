@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="jquery-3.4.1.min.js"></script>
+        <title>USER|EVENTS</title>
+        <link rel="stylesheet" type="text/css" href="css4">
+        <link rel="stylesheet" type="text/css" href="menucss">
+    </head>
+    </head>
+    <body>
+        <header>
+            <div id="headerNav">
+                <span id="title" style="color: #ff3300; font-size:24px;padding: 8px; width: 250px"><b>VITBUZZ</b></span>
+                <img id="menuButton" src="/images/menu.png" width="34px" height="34px" style="padding:5px;">
+                <img id="profileButton" src="/images/profile.png" width="34px" height="34px" style="padding:5px;">
+                <div id="loginButon" style="display: flex;position:absolute;left:100%;transform:translate(-100%,0%);">
+                    <img src="/images/logout.png" width="34px" height="34px" style="padding:5px;">
+                    <span style="color: #ff3300; font-size:24px;padding:8px;transform:translate(-5px,0%);">Logout</span>
+                </div>
+            </div>
+        </header>
+        <section class="eventsPage">
+            <section id="menu">
+                    <div class="menuItem" id="homeButton"><button>HOME</button></div>
+                    <div class="menuItem" id="newsButton"><button>NEWS</button></div>
+                    <div class="menuItem" id="eventsButton" style="background: #bbbbbb;"><button style="background: #bbbbbb;">EVENTS</button></div>
+                    <div class="menuItem" id="favButton"><button>FAVOURITES</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>PUBLISH</u></p></center>
+                    <div class="menuItem" id="newNewsButton"><button>PUBLISH NEWS</button></div>
+                    <div class="menuItem" id="newEventsButton"><button>PUBLISH EVENTS</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>INFO</u></p></center>
+                    <div class="menuItem" id="hostelsButton"><button>VIT HOSTELS</button></div>
+                    <div class="menuItem" id="clubsButton"><button>CHAPTERS AND CLUBS</button></div>
+                    <div class="menuItem" id="startUpsButton"><button>STARTUPS IN VIT</button></div>
+            </section>
+            <section id="eventsContent" style="background:#dddddd;">
+                <div id="eventsTitle" style="font-size: 32px;width:95%;height: 43px;padding: 10px;padding-left: 15px; margin: 8px;background: #ffffff;">EVENTS</div>
+                <div id="eventsMenu">
+                <div class="eventsTypeBox" style="top:200px; left: 330px;" data-id="1">
+                    <div style="width: 100%;height:100%;z-index: 1;"><img src="/images/blue_star_news.png" width="100%" height="100%" ></div>
+                    <div style="z-index: 2;position:absolute;bottom: 36px;right: 16px;font-size: 32px;padding: 8px;color: #ffffff">POPULAR</div>  
+                </div>
+                <div class="eventsTypeBox" style="top:200px; left: 660px;" data-id="2">
+                    <div style="width: 100%;height:100%;z-index: 1;"><img src="/images/orange_my_news.png" width="100%" height="100%" ></div>
+                    <div style="z-index: 2;position:absolute;bottom: 32px;right: 8px;font-size: 32px;padding: 8px;color: #ffffff">MY EVENTS</div>  
+                </div>
+                <div class="eventsTypeBox" style="top:200px; left: 990px;" data-id="3">
+                    <div style="width: 100%;height:100%;z-index: 1;"><img src="/images/green_recent_news.png" width="100%" height="100%" ></div>
+                    <div style="z-index: 2;position:absolute;bottom: 32px;right: 10px;font-size: 32px;padding: 8px;color: #ffffff">RECENT</div>  
+                </div>
+                </div>
+                <div id="eventsDisplayDiv">
+                    
+                </div>
+            </section>
+        </section>
+        <script type="text/javascript" src="menujs"></script>
+        <script type="text/javascript" src="logoutjs"></script>
+        <script>
+            var eventsMenu=document.getElementById("eventsMenu");
+            var eventsListDiv=document.getElementById("eventsDisplayDiv");
+            var eventstypes=document.getElementsByClassName("eventsTypeBox");
+            var eventsTitle=document.getElementById("eventsTitle");
+            eventsListDiv.style.display="none";
+            eventsMenu.style.display="block";
+            for(var i=0;i<eventstypes.length;i++){
+                eventstypes[i].addEventListener("click",function(){
+                    eventsListDiv.style.display="block";
+                    eventsMenu.style.display="none";
+                    if(this.getAttribute("data-id")=="1"){
+                        eventsTitle.innerHTML="POPULAR EVENTS";
+                        var xmlhttp = new XMLHttpRequest();
+                        var url = "getPopularEvents";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            var list=JSON.parse(this.response);
+                            console.log(list);
+                            list.forEach(element => {
+                                addEvents(element);
+                            });
+                            }
+                        };
+                        xmlhttp.open("GET", url, true);
+                        xmlhttp.send();
+                    }
+                    else if(this.getAttribute("data-id")=="2"){
+                        eventsTitle.innerHTML="MY EVENTS";
+                        var xmlhttp = new XMLHttpRequest();
+                        var url = "getMyEvents";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            var list=JSON.parse(this.response);
+                            console.log(list);
+                            list.forEach(element => {
+                                addEvents(element);
+                            });
+                            }
+                        };
+                        xmlhttp.open("GET", url, true);
+                        xmlhttp.send();
+                    }
+                    else{
+                        eventsTitle.innerHTML="RECENT EVENTS";
+                        var xmlhttp = new XMLHttpRequest();
+                        var url = "getRecentEvents";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            var list=JSON.parse(this.response);
+                            console.log(list);
+                            list.forEach(element => {
+                                addEvents(element);
+                            });
+                            }
+                        };
+                        xmlhttp.open("GET", url, true);
+                        xmlhttp.send();
+                    }
+                });
+            }
+            function addEvents(doc){
+                var ndd=document.getElementById("eventsDisplayDiv");
+                var boxdiv=document.createElement("div");
+                boxdiv.classList.add("listItem");
+                var imgdiv=document.createElement("div");
+                imgdiv.classList.add("listItemImg");
+                var cntdiv=document.createElement("div");
+                cntdiv.classList.add("listItemInfo");
+                var img=document.createElement("img");
+                img.src=doc.imguri;
+                var cnt=document.createElement("p");
+                cnt.innerHTML="This is profile image";
+                var cnth=document.createElement("div");
+                cnth.classList.add("listItemHeader");
+                var cndate=document.createElement("p");
+                var cntitle=document.createElement("h1");
+                var cni=document.createElement("p");
+                var date=new Date((doc.date.seconds)*1000);
+                cndate.innerHTML=(date.toDateString());
+                cntitle.innerHTML=doc.title;
+                cni.innerHTML=doc.desc;
+                cnth.appendChild(cntitle);
+                cnth.appendChild(cndate);
+                imgdiv.appendChild(img);
+                cntdiv.appendChild(cnth);
+                cntdiv.appendChild(cni);
+                boxdiv.appendChild(imgdiv);
+                boxdiv.appendChild(cntdiv);
+                ndd.appendChild(boxdiv);
+                boxdiv.addEventListener('click',(event)=>{
+                    var xmlhttp = new XMLHttpRequest();
+                        var url = "setCurrentEventDoc";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            window.location.href="openEventView";
+                            }
+                        };
+                        xmlhttp.open("POST", url, true);
+                        xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xmlhttp.send("eid="+String(doc.eid)+"&capacity="+doc.capacity+"&title="+doc.title+"&desc="+doc.desc+"&registered="+doc.registered+"&date="+(new Date((doc.date.seconds)*1000)).toDateString()+"&regopen="+(new Date((doc.startDate.seconds)*1000)).toDateString()+"&regclose="+(new Date((doc.endDate.seconds)*1000)).toDateString()+"&imguri="+doc.imguri);
+                        event.stopPropagation? event.stopPropagation() : event.cancelBubble = true;
+                });
+            }
+            function increasePage(){
+                document.getElementById("eventsContent").style.width="100%";
+            }
+            function decreasePage(){
+                document.getElementById("eventsContent").style.width="80%";
+            }
+        </script>
+    </body>
+</html>

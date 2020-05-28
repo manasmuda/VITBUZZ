@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>VITBUZZ|LOGIN</title>
+        <link rel="stylesheet" type="text/css" href="css1">
+    </head>
+    <body>
+        <header>
+            <h1>VITBUZZ</h1>
+        </header>
+        <section style="display: flex;">
+            <div id="loginMenu" style="display: none">
+                <div class="selected menuItems">
+                    <center>USER</center>
+                </div>
+                <div class="menuItems">
+                    <center>ADMIN</center>
+                </div>
+            </div>
+            <div id="loginPage">
+                <center>
+                <div id="lsbox">
+                    <div class="selectedM ust">
+                        <button>LOGIN</button>
+                    </div>
+                    <div class="ust">
+                        <button>SIGNUP</button>
+                    </div>
+                </div>
+                <div id="loginBox">
+                    <span id="ulstitle">LOGIN</span>
+                    <br>
+                    <div>
+                        <span class="loginDetails">Email-Id:</span>
+                        <input class="loginDetails" type="text" id="email">
+                    </div>
+                    <div>
+                        <span class="loginDetails">Password:</span>
+                        <input class="loginDetails" type="password" id="pwd">
+                    </div>
+                    <center><button id="ulsbutton" onclick="lsbuttonclick()">LOGIN</button></center>
+                </div>
+                </center>
+            </div>
+        </section>
+        <script>
+            var utflag=0;
+            var ulsflag=0;
+            var menuItems=document.getElementsByClassName("menuItems");
+            var ust=document.getElementsByClassName("ust");
+            var lsbox=document.getElementById("lsbox");
+            var ulstitle=document.getElementById("ulstitle");
+            var ulsbutton=document.getElementById("ulsbutton");
+            var emailbox=document.getElementById("email");
+            var pwdbox=document.getElementById("pwd");
+            var cookies=Object.fromEntries(document.cookie.split('; ').map(x => x.split('=')));
+            console.log(cookies['login']);
+            if(cookies['login']==1){
+                console.log("1");
+                window.location.href="userHomehtml";
+            }
+            menuItems[0].addEventListener("click",()=>{
+                clearClass(0);
+                utflag=0;
+                lsbox.style["display"]="flex";
+            });
+            menuItems[1].addEventListener("click",()=>{
+                utflag=1;
+                clearClass(1);
+                lsbox.style["display"]="none";
+                ulstitle.innerHTML="LOGIN";
+                ulsbutton.innerHTML="LOGIN";
+            });
+            function clearClass(x){
+                for(var i=0;i<menuItems.length;i++){
+                    if(menuItems[i].classList.contains("selected")){
+                        menuItems[i].classList.remove("selected")
+                    }    
+                }
+                menuItems[x].classList.add("selected");
+                console.log(x);
+            }
+            ust[0].addEventListener("click",()=>{
+                ulsflag=1;
+                clearClass1(0);
+            });
+            ust[1].addEventListener("click",()=>{
+                ulsflag=1;
+                clearClass1(1);
+            });
+            function clearClass1(x){
+                for(var i=0;i<ust.length;i++){
+                    if(ust[i].classList.contains("selectedM")){
+                        ust[i].classList.remove("selectedM")
+                    }    
+                }
+                ust[x].classList.add("selectedM");
+                if(x==0){
+                    ulstitle.innerHTML="LOGIN";
+                    ulsbutton.innerHTML="LOGIN";
+                }
+                else{
+                    ulstitle.innerHTML="SIGNUP";
+                    ulsbutton.innerHTML="SIGNUP";
+                }
+            }
+
+        function lsbuttonclick(){
+            console.log("email="+emailbox.value+"&pwd="+pwdbox.value);
+            if(ulsflag==0){
+                var xmlhttp = new XMLHttpRequest();
+                var url = "loginpost";
+                xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.href="userHome";
+                }
+                };
+                xmlhttp.open("POST", url, true);
+                xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xmlhttp.send("email="+emailbox.value+"&pwd="+pwdbox.value);
+                
+            }
+            else{
+                var xmlhttp = new XMLHttpRequest();
+                var url = "registerpost";
+                xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.response);
+                }
+                };
+                xmlhttp.open("POST", url, true);
+                xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xmlhttp.send("email="+emailbox.value+"&pwd="+pwdbox.value);
+                console.log(xmlhttp);
+            }
+        }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,142 @@
+header{
+    text-align: center;
+    background: #ff3300;
+    width: all;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#title{
+    transition: width 1s;
+}
+
+.eventsPage{
+    display: flex;
+}
+
+#menu{
+    z-index: 1;
+    position:static;
+    background: #333333;
+    width: 20%;
+    height: 650px;
+    transition: width 1s;
+}
+
+#headerNav{
+    background: #ffffff;
+    width:all; 
+    display:flex;
+    border-style: solid;
+    border: 1;
+    border-color: #ff3300;
+}
+
+#eventsContent{
+    z-index: 2;
+    height: 610px;
+    width: 80%;
+    padding: 20px;
+    overflow-y: auto;
+    transition: width 1s;
+}
+
+.menuItem{
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    color: #ffffff;
+}
+
+.menuItem button{
+    position: relative;
+    padding: 5px;
+    left: 50%;
+    font-size: 20px;
+    background: #333333;
+    color: #ffffff;
+    border: none;
+    transform: translate(-60%,0);
+}
+
+.eventsTypeBox{
+    position: absolute;
+    margin: 15px;
+    width: 280px;
+    height: 190px;
+}
+
+#eventsMenu{
+    display: block;
+}
+
+#eventsDisplayDiv{
+    position: relative;
+    padding: 12px;
+    overflow-y: auto;
+    height: 500px;
+    display: none;
+}
+
+#eventsDisplayDiv::-webkit-scrollbar{
+    display: none;
+}
+
+.listItem{
+    display: flex;
+    width: 96%;
+    height: 220px;
+    background: #ffffff;
+    border-style:solid;
+    border-width:2px;
+    border-radius:10px;
+    border-color:#ff3300;
+    margin-bottom: 20px;
+}
+
+.listItemImg{
+    padding: 20px;
+    width: 22%;
+    height: 100%;
+}
+
+.listItemInfo{
+    width: 70%;
+    color: #000000;
+}
+
+.listItemInfo p{
+    margin-left: 17px;
+}
+
+.listItemImg img{
+    width: 80%;
+    height: 80%;
+    border-radius: 10px;
+}
+
+.listItemHeader{
+    position: relative;
+    width: 100%;
+    display: flex;
+    color: #ff3300;
+}
+
+.listItemHeader p{
+    position: absolute;
+    right: 0px;
+    margin-right: 10px;
+    bottom: 0px;
+}
+
+.listItem h1{
+    position: relative;
+    top: 3px;
+    font-size: 48px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 8px;
+}

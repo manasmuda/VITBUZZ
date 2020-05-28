@@ -1,0 +1,7 @@
+.menuItem:hover{
+    background: #bbbbbb;
+}
+
+.menuItem:hover button{
+    background: #bbbbbb;
+}

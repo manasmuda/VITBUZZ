@@ -1,0 +1,63 @@
+header{
+    text-align: center;
+    background: #ff3300;
+    width: all;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#title{
+    transition: width 1s;
+}
+
+.hostelsPage{
+    display: flex;
+}
+
+#menu{
+    z-index: 1;
+    position:static;
+    background: #333333;
+    width: 20%;
+    height: 650px;
+    transition: width 1s;
+}
+
+#headerNav{
+    background: #ffffff;
+    width:all; 
+    display:flex;
+    border-style: solid;
+    border: 1;
+    border-color: #ff3300;
+}
+
+#hostelsContent{
+    z-index: 2;
+    height: 610px;
+    width: 80%;
+    padding: 20px;
+    overflow-y: auto;
+    transition: width 1s;
+}
+
+.menuItem{
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    color: #ffffff;
+}
+
+.menuItem button{
+    position: relative;
+    padding: 5px;
+    left: 50%;
+    font-size: 20px;
+    background: #333333;
+    color: #ffffff;
+    border: none;
+    transform: translate(-60%,0);
+}

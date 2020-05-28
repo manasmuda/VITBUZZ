@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="jquery-3.4.1.min.js"></script>
+        <title>USER|NEWS</title>
+        <link rel="stylesheet" type="text/css" href="css3">
+        <link rel="stylesheet" type="text/css" href="menucss">
+    </head>
+    </head>
+    <body>
+        <header>
+            <div id="headerNav">
+                <span id="title" style="color: #ff3300; font-size:24px;padding: 8px; width: 250px"><b>VITBUZZ</b></span>
+                <img id="menuButton" src="/images/menu.png" width="34px" height="34px" style="padding:5px;">
+                <img id="profileButton" src="/images/profile.png" width="34px" height="34px" style="padding:5px;">
+                <div id="loginButon" style="display: flex;position:absolute;left:100%;transform:translate(-100%,0%);">
+                    <img src="/images/logout.png" width="34px" height="34px" style="padding:5px;">
+                    <span style="color: #ff3300; font-size:24px;padding:8px;transform:translate(-5px,0%);">Logout</span>
+                </div>
+            </div>
+        </header>
+        <section class="newsPage">
+            <section id="menu">
+                    <div class="menuItem" id="homeButton"><button>HOME</button></div>
+                    <div class="menuItem" id="newsButton" style="background: #bbbbbb;"><button style="background: #bbbbbb;">NEWS</button></div>
+                    <div class="menuItem" id="eventsButton"><button>EVENTS</button></div>
+                    <div class="menuItem" id="favButton"><button>FAVOURITES</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>PUBLISH</u></p></center>
+                    <div class="menuItem" id="newNewsButton"><button>PUBLISH NEWS</button></div>
+                    <div class="menuItem" id="newEventsButton"><button>PUBLISH EVENTS</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>INFO</u></p></center>
+                    <div class="menuItem" id="hostelsButton"><button>VIT HOSTELS</button></div>
+                    <div class="menuItem" id="clubsButton"><button>CHAPTERS AND CLUBS</button></div>
+                    <div class="menuItem" id="startUpsButton"><button>STARTUPS IN VIT</button></div>
+            </section>
+            <section id="newsContent" style="background:#dddddd;">
+                <div id="newsTitle" style="font-size: 32px;width:95%;height: 43px;padding: 10px;padding-left: 15px; margin: 8px;background: #ffffff;">NEWS</div>
+                <div id="newsMenu">
+                <div class="newsTypeBox" data-id="1">
+                    <div style="width: 100%;height:100%;z-index: 1;"><img src="/images/blue_star_news.png" width="100%" height="100%" ></div>
+                    <div style="z-index: 2;position:absolute;bottom: 36px;right: 16px;font-size: 32px;padding: 8px;color: #ffffff">POPULAR</div>  
+                </div>
+                <div class="newsTypeBox"  data-id="2">
+                    <div style="width: 100%;height:100%;z-index: 1;"><img src="/images/orange_my_news.png" width="100%" height="100%" ></div>
+                    <div style="z-index: 2;position:absolute;bottom: 32px;right: 10px;font-size: 32px;padding: 8px;color: #ffffff">MY NEWS</div>  
+                </div>
+                <div class="newsTypeBox" data-id="3">
+                    <div style="width: 100%;height:100%;z-index: 1;"><img src="/images/green_recent_news.png" width="100%" height="100%" ></div>
+                    <div style="z-index: 2;position:absolute;bottom: 32px;right: 10px;font-size: 32px;padding: 8px;color: #ffffff">RECENT</div>  
+                </div>
+                </div>
+                <div id="newsDisplayDiv">
+                    
+                </div>
+            </section>
+        </section>
+        <script type="text/javascript" src="menujs"></script>
+        <script type="text/javascript" src="logoutjs"></script>
+        <script>
+            var newsMenu=document.getElementById("newsMenu");
+            var newsListDiv=document.getElementById("newsDisplayDiv");
+            var newstypes=document.getElementsByClassName("newsTypeBox");
+            var newsTitle=document.getElementById("newsTitle");
+            newsListDiv.style.display="none";
+            newsMenu.style.display="flex";
+            for(var i=0;i<newstypes.length;i++){
+                newstypes[i].addEventListener("click",function(){
+                    newsListDiv.style.display="block";
+                    newsMenu.style.display="none";
+                    if(this.getAttribute("data-id")=="1"){
+                        newsTitle.innerHTML="POPULAR NEWS";
+                        var xmlhttp = new XMLHttpRequest();
+                        var url = "getPopularNews";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            var list=JSON.parse(this.response);
+                            console.log(list);
+                            list.forEach(element => {
+                                addNews(element);
+                            });
+                            }
+                        };
+                        xmlhttp.open("GET", url, true);
+                        xmlhttp.send();
+                    }
+                    else if(this.getAttribute("data-id")=="2"){
+                        newsTitle.innerHTML="MY NEWS";
+                        var xmlhttp = new XMLHttpRequest();
+                        var url = "getMyNews";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            var list=JSON.parse(this.response);
+                            console.log(list);
+                            list.forEach(element => {
+                                addNews(element);
+                            });
+                            }
+                        };
+                        xmlhttp.open("GET", url, true);
+                        xmlhttp.send();
+                    }
+                    else{
+                        newsTitle.innerHTML="RECENT NEWS";
+                        var xmlhttp = new XMLHttpRequest();
+                        var url = "getRecentNews";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            var list=JSON.parse(this.response);
+                            console.log(list);
+                            list.forEach(element => {
+                                addNews(element);
+                            });
+                            }
+                        };
+                        xmlhttp.open("GET", url, true);
+                        xmlhttp.send();
+                    }
+                });
+            }
+            function addNews(doc){
+                var ndd=document.getElementById("newsDisplayDiv");
+                var boxdiv=document.createElement("div");
+                boxdiv.classList.add("listItem");
+                var imgdiv=document.createElement("div");
+                imgdiv.classList.add("listItemImg");
+                var cntdiv=document.createElement("div");
+                cntdiv.classList.add("listItemInfo");
+                var img=document.createElement("img");
+                img.src=doc.imguri;
+                var cnth=document.createElement("div");
+                cnth.classList.add("listItemHeader");
+                var cnby=document.createElement("p");
+                var cnt=document.createElement("h1");
+                var cnd=document.createElement("p");
+                var cnf=document.createElement("div");
+                cnf.classList.add("listItemFooter");
+                var cnlikes=document.createElement("p");
+                var cndate=document.createElement("p");
+                cndate.classList.add("date");
+                cnt.innerHTML=doc.title;
+                if(doc.desc.length>180){
+                    cnd.innerHTML=doc.desc.substring(0,170)+"...";
+                }
+                else{
+                    cnd.innerHTML=doc.desc;
+                }
+                cnby.innerHTML="by Manas";
+                cnlikes.innerHTML=String(doc.likes)+" Likes";
+                var date=new Date((doc.date.seconds)*1000);
+                console.log(date);
+                cndate.innerHTML=date.toDateString();
+                cnth.appendChild(cnt);
+                cnth.appendChild(cnby);
+                cnf.appendChild(cnlikes);
+                cnf.appendChild(cndate);
+                imgdiv.appendChild(img);
+                cntdiv.appendChild(cnth);
+                cntdiv.appendChild(cnd);
+                cntdiv.appendChild(cnf);
+                boxdiv.appendChild(imgdiv);
+                boxdiv.appendChild(cntdiv);
+                //boxdiv.children.item(1).children.item(0).innerHTML="hr";
+                ndd.appendChild(boxdiv);
+                boxdiv.addEventListener('click',(event)=>{
+                    var xmlhttp = new XMLHttpRequest();
+                        var url = "setCurrentNewsDoc";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            window.location.href="openNewsView";
+                            }
+                        };
+                        xmlhttp.open("POST", url, true);
+                        xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xmlhttp.send("nid="+String(doc.nid)+"&title="+doc.title+"&desc="+doc.desc+"&likes="+doc.likes+"&date="+(new Date((doc.date.seconds)*1000)).toDateString()+"&imguri="+doc.imguri);
+                        event.stopPropagation? event.stopPropagation() : event.cancelBubble = true;
+                });
+            }
+
+            function increasePage(){
+                document.getElementById("newsContent").style.width="100%";
+            }
+            function decreasePage(){
+                document.getElementById("newsContent").style.width="80%";
+            }
+        </script>
+    </body>
+</html>

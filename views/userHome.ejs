@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="jquery-3.4.1.min.js"></script>
+        <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="css2">
+        <link rel="stylesheet" type="text/css" href="menucss">
+    </head>
+    </head>
+    <body>
+        <header>
+            <div id="headerNav">
+                <span id="title" style="color: #ff3300; font-size:24px;padding: 8px; width: 250px"><b>VITBUZZ</b></span>
+                <img id="menuButton" src="/images/menu.png" width="34px" height="34px" style="padding:5px;">
+                <img id="profileButton" src="/images/profile.png" width="34px" height="34px" style="padding:5px;">
+                <div id="loginButon" style="display: flex;position:absolute;left:100%;transform:translate(-100%,0%);">
+                    <img src="/images/logout.png" width="34px" height="34px" style="padding:5px;">
+                    <span style="color: #ff3300; font-size:24px;padding:8px;transform:translate(-5px,0%);">Logout</span>
+                </div>
+            </div>
+        </header>
+        <section class="homePage">
+            <section id="menu">
+                    <div class="menuItem" id="homeButton" style="background: #bbbbbb;"><button style="background: #bbbbbb;">HOME</button></div>
+                    <div class="menuItem" id="newsButton"><button>NEWS</button></div>
+                    <div class="menuItem" id="eventsButton"><button>EVENTS</button></div>
+                    <div class="menuItem" id="favButton"><button>FAVOURITES</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>PUBLISH</u></p></center>
+                    <div class="menuItem" id="newNewsButton"><button>PUBLISH NEWS</button></div>
+                    <div class="menuItem" id="newEventsButton"><button>PUBLISH EVENTS</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>INFO</u></p></center>
+                    <div class="menuItem" id="hostelsButton"><button>VIT HOSTELS</button></div>
+                    <div class="menuItem" id="clubsButton"><button>CHAPTERS AND CLUBS</button></div>
+                    <div class="menuItem" id="startUpsButton"><button>STARTUPS IN VIT</button></div>
+            </section>
+            <section id="homeContent">
+                <h2>LATEST NEWS</h2>
+                <div class="pager" id="news_pager">
+                   
+                </div>
+                <h2>UPCOMING EVENTS</h2>
+                <div class="pager" id="events_pager">
+
+                </div>
+            </section>
+        </section>
+        <script type="text/javascript" src="menujs"></script>
+        <script type="text/javascript" src="logoutjs"></script>
+        <script>
+            var np=document.getElementById("news_pager");
+            var ep=document.getElementById("events_pager");
+                var xmlhttp = new XMLHttpRequest();
+                var url = "getPopularNews";
+                var fd=new FormData();
+                xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            var list=JSON.parse(this.response);
+                            console.log(list);
+                            list.forEach(element => {
+                                addNews(np,element);
+                            });
+                            }
+                        };
+                        xmlhttp.open("GET", url, true);
+             xmlhttp.send();
+             var xmlhttp1 = new XMLHttpRequest();
+                var url = "getPopularEvents";
+                var fd=new FormData();
+                xmlhttp1.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            var list=JSON.parse(this.response);
+                            console.log(list);
+                            list.forEach(element => {
+                                addEvents(ep,element);
+                            });
+                            }
+                        };
+                        xmlhttp1.open("GET", url, true);
+             xmlhttp1.send();
+            function addNews(x,doc){
+                var boxdiv=document.createElement("div");
+                boxdiv.classList.add("pagerItem");
+                var imgdiv=document.createElement("div");
+                imgdiv.classList.add("pagerItemImg");
+                var cntdiv=document.createElement("div");
+                cntdiv.classList.add("pagerItemInfo");
+                var img=document.createElement("img");
+                img.src=doc.imguri;
+                var cnt=document.createElement("p");
+                cnt.innerHTML=doc.title;
+                imgdiv.appendChild(img);
+                cntdiv.innerHTML=doc.title;
+                boxdiv.appendChild(imgdiv);
+                boxdiv.appendChild(cntdiv);
+                x.appendChild(boxdiv);
+                boxdiv.addEventListener('click',(event)=>{
+                    var xmlhttp = new XMLHttpRequest();
+                        var url = "setCurrentNewsDoc";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            window.location.href="openNewsView";
+                            }
+                        };
+                        xmlhttp.open("POST", url, true);
+                        xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xmlhttp.send("nid="+String(doc.nid)+"&title="+doc.title+"&desc="+doc.desc+"&likes="+doc.likes+"&date="+(new Date((doc.date.seconds)*1000)).toDateString()+"&imguri="+doc.imguri);
+                    });
+            }
+            function addEvents(x,doc){
+                var boxdiv=document.createElement("div");
+                boxdiv.classList.add("pagerItem");
+                var imgdiv=document.createElement("div");
+                imgdiv.classList.add("pagerItemImg");
+                var cntdiv=document.createElement("div");
+                cntdiv.classList.add("pagerItemInfo");
+                var img=document.createElement("img");
+                img.src=doc.imguri;
+                var cnt=document.createElement("p");
+                cnt.innerHTML=doc.title;
+                imgdiv.appendChild(img);
+                cntdiv.innerHTML=doc.title;
+                boxdiv.appendChild(imgdiv);
+                boxdiv.appendChild(cntdiv);
+                x.appendChild(boxdiv);
+                event.stopPropagation? event.stopPropagation() : event.cancelBubble = true;
+                boxdiv.addEventListener('click',(event)=>{
+                    var xmlhttp = new XMLHttpRequest();
+                        var url = "setCurrentEventDoc";
+                        var fd=new FormData();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                            //uploadNews(nid,this.responseText);
+                            window.location.href="openEventView";
+                            }
+                        };
+                        xmlhttp.open("POST", url, true);
+                        xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xmlhttp.send("eid="+String(doc.eid)+"&capacity="+doc.capacity+"&title="+doc.title+"&desc="+doc.desc+"&registered="+doc.registered+"&date="+(new Date((doc.date.seconds)*1000)).toDateString()+"&regopen="+(new Date((doc.startDate.seconds)*1000)).toDateString()+"&regclose="+(new Date((doc.endDate.seconds)*1000)).toDateString()+"&imguri="+doc.imguri);
+                        event.stopPropagation? event.stopPropagation() : event.cancelBubble = true;
+                });
+            }
+            function increasePage(){
+                document.getElementById("homeContent").style.width="100%";
+                document.getElementById("news_pager").style.maxWidth="1600px";
+                document.getElementById("announcements_pager").style.maxWidth="1600px";
+                document.getElementById("events_pager").style.maxWidth="1600px";
+            }
+            function decreasePage(){
+                document.getElementById("homeContent").style.width="80%";
+                document.getElementById("news_pager").style.maxWidth="1300px";
+                document.getElementById("announcements_pager").style.maxWidth="1300px";
+                document.getElementById("events_pager").style.maxWidth="1300px";
+            }
+
+        </script>
+    </body>
+</html>

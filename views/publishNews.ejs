@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="jquery-3.4.1.min.js"></script>
+        <title>USER|PUBLISH NEWS</title>
+        <link rel="stylesheet" type="text/css" href="css5">
+        <link rel="stylesheet" type="text/css" href="menucss">
+    </head>
+    </head>
+    <body>
+        <header>
+            <div id="headerNav">
+                <span id="title" style="color: #ff3300; font-size:24px;padding: 8px; width: 250px"><b>VITBUZZ</b></span>
+                <img id="menuButton" src="/images/menu.png" width="34px" height="34px" style="padding:5px;">
+                <img id="profileButton" src="/images/profile.png" width="34px" height="34px" style="padding:5px;">
+                <div id="loginButon" style="display: flex;position:absolute;left:100%;transform:translate(-100%,0%);">
+                    <img src="/images/logout.png" width="34px" height="34px" style="padding:5px;">
+                    <span style="color: #ff3300; font-size:24px;padding:8px;transform:translate(-5px,0%);">Logout</span>
+                </div>
+            </div>
+        </header>
+        <section class="publishNewsPage">
+            <section id="menu">
+                    <div class="menuItem" id="homeButton"><button>HOME</button></div>
+                    <div class="menuItem" id="newsButton"><button>NEWS</button></div>
+                    <div class="menuItem" id="eventsButton"><button>EVENTS</button></div>
+                    <div class="menuItem" id="favButton"><button>FAVOURITES</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>PUBLISH</u></p></center>
+                    <div class="menuItem" id="newNewsButton" style="background: #bbbbbb;"><button style="background: #bbbbbb;">PUBLISH NEWS</button></div>
+                    <div class="menuItem" id="newEventsButton"><button>PUBLISH EVENTS</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>INFO</u></p></center>
+                    <div class="menuItem" id="hostelsButton"><button>VIT HOSTELS</button></div>
+                    <div class="menuItem" id="clubsButton"><button>CHAPTERS AND CLUBS</button></div>
+                    <div class="menuItem" id="startUpsButton"><button>STARTUPS IN VIT</button></div>
+            </section>
+            <section id="publishNewsContent" style="background:#dddddd;">
+                    <form action="/uploadNews" method="post" enctype="multipart/form-data">
+                <div id="photoTitleDiv">
+                    <div style="display: block">
+                        <label for="upload-photo">
+                            <img id="newsImage" src="/images/profile.png" width="150px" height="150px">
+                        </label>
+                        <input type="file" name="photo" id="upload-photo" accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this)" >
+                    </div>
+                    <div>
+                    <input id="newsTitle" name="newsTitle" placeholder="Enter Title">
+                    <input type="submit" id="newsSubmit" value="PUBLISH">
+                </div>
+                </div>
+                <div>
+                    <textarea id="newsDesc" name="newsDesc" style="width: 100%;height: 500px;" placeholder="Enter Description"></textarea>
+                </div>
+                    </form>
+            </section>
+        </section>
+        <script type="text/javascript" src="menujs"></script>
+        <script type="text/javascript" src="logoutjs"></script>
+        <script>
+            var uploadPhoto=document.getElementById("upload-photo");
+            var imgsrc=null;
+            var submitButton=document.getElementById("newsSubmit1");
+            var newsImg=document.getElementById("newsImage");
+            var newsTitle=document.getElementById("newsTitle");
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                     var reader = new FileReader();
+                    reader.onload = function (e) {
+                            var image=document.getElementById("newsImage");
+                            image.src=e.target.result;
+                            imgsrc=e.target.result;
+                            console.log(e.target);
+                            //var array = new Uint8Array(e.target.result);
+                            //var binaryString = String.fromCharCode.apply(null, array);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+           /* submitButton.addEventListener("click",()=>{
+                var nid=randomString(10);
+                console.log(uploadPhoto.files[0]);
+                if(uploadPhoto.files.length!=0){
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = "uploadPhoto";
+                    var fd=new FormData();
+                    f
+                    xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        //uploadNews(nid,this.responseText);
+                        console.log("successfully uploaded");
+                    }
+                    };
+                    xmlhttp.open("POST", url, true);
+                    xmlhttp.send("nid="+nid+"&file="+imgsrc);
+                }
+                else{
+
+                }
+            });
+            function uploadNews(){
+
+            }*/
+            function increasePage(){
+                document.getElementById("publishNewsContent").style.width="100%";
+            }
+            function decreasePage(){
+                document.getElementById("publishNewsContent").style.width="80%";
+            }
+        </script>
+    </body>
+</html>

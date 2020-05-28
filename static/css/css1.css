@@ -1,0 +1,115 @@
+header{
+    text-align: center;
+    display: flex;
+    background: #ff5000;
+    width: all;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+h1{
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0%);
+    color: #ffffff;
+}
+#loginMenu{
+    width:27%;
+}
+
+#loginMenu div{
+    height: 300px;
+    border-style: solid;
+    border-color: #ff5000;
+    border-width: 3px;
+    transition: background 2s, border-color 2s;
+}
+
+#loginMenu div center{
+    color: #000000;
+    font-size: 40px;
+    position: relative;
+    top: 50%;
+    transform: translate(0%,-50%);
+    transition: color 2s;
+}
+
+#loginMenu .selected{
+    background: #ff5000;
+    border-color: #ffffff;
+}
+
+#loginMenu .selected center{
+    color: #ffffff;
+}
+
+#loginPage{
+    
+    width: 100%;
+    height: 620px;
+}
+
+#loginPage center{
+    position: relative;
+    top: 50%;
+    transform: translate(0%,-50%);
+}
+
+#loginBox{
+    border-style: solid;
+    border-color: #ff5000;
+    border-width: 3px;
+    height: 250px;
+    width: 300px;
+    background-color: #ffffff;
+}
+
+.loginDetails{
+    display: inline-block;
+}
+
+#loginBox span:not(.loginDetails){
+    position: relative;
+    top: 10px;
+
+}
+
+#loginBox div{
+    margin: 10px;
+    position: relative;
+    top: 10px;
+}
+
+#lsbox{
+    display: flex;
+    width: 303px;
+    border-style: solid;
+    border-width: 1;
+    border-color: #ff5000;
+}
+
+#lsbox div{
+    width: 50%;
+    border-style: solid;
+    border-width: 1;
+    border-color: #ff5000;
+}
+
+#lsbox div button{
+    border: none;
+    text-align: center;
+    font-size: 20px;
+    color: #ff5000;
+    background:none;
+    width: 100%;
+    height: 100%;
+}
+
+#lsbox .selectedM button{
+    color: #ffffff;
+}
+
+#lsbox .selectedM{
+    background: #ff5000;
+}

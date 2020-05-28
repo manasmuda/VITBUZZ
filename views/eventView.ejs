@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="jquery-3.4.1.min.js"></script>
+        <title>USER|NEWS</title>
+        <link rel="stylesheet" type="text/css" href="css9">
+        <link rel="stylesheet" type="text/css" href="menucss">
+    </head>
+    </head>
+    <body>
+        <header>
+            <div id="headerNav">
+                <span id="title" style="color: #ff3300; font-size:24px;padding: 8px; width: 250px"><b>VITBUZZ</b></span>
+                <img id="menuButton" src="/images/menu.png" width="34px" height="34px" style="padding:5px;">
+                <img id="profileButton" src="/images/profile.png" width="34px" height="34px" style="padding:5px;">
+                <div id="loginButon" style="display: flex;position:absolute;left:100%;transform:translate(-100%,0%);">
+                    <img src="/images/logout.png" width="34px" height="34px" style="padding:5px;">
+                    <span style="color: #ff3300; font-size:24px;padding:8px;transform:translate(-5px,0%);">Logout</span>
+                </div>
+            </div>
+        </header>
+        <section class="eventView">
+            <section id="menu">
+                    <div class="menuItem" id="homeButton"><button>HOME</button></div>
+                    <div class="menuItem" id="newsButton" style="background: #bbbbbb;"><button style="background: #bbbbbb;">NEWS</button></div>
+                    <div class="menuItem" id="eventsButton"><button>EVENTS</button></div>
+                    <div class="menuItem" id="favButton"><button>FAVOURITES</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>PUBLISH</u></p></center>
+                    <div class="menuItem" id="newNewsButton"><button>PUBLISH NEWS</button></div>
+                    <div class="menuItem" id="newEventsButton"><button>PUBLISH EVENTS</button></div>
+                    <center style="color: #333333;width: 100%;background: #ffffff;"><p><u>INFO</u></p></center>
+                    <div class="menuItem" id="hostelsButton"><button>VIT HOSTELS</button></div>
+                    <div class="menuItem" id="clubsButton"><button>CHAPTERS AND CLUBS</button></div>
+                    <div class="menuItem" id="startUpsButton"><button>STARTUPS IN VIT</button></div>
+            </section>
+            <section id="eventViewContent" style="background:#dddddd;">
+                <center><div style="padding: 5px" id="eventTitle"><%= title%></div></center>
+                <center><img style="padding: 5px" src=<%= imguri%>&target=<%= token%> width="220px" height="220px"></center>
+                <center><div style="padding: 5px;font-size: 14px" id="regopensdiv">Registration opens on <%= regopen%></div></center>
+                <center><div style="padding: 5px;font-size: 14px" id="regclosesdiv">Registration closes on <%= regclose%></div></center>
+                <center><button style="background: #ff3300;color:#dddddd" id="registerbutton">REGISTER</button></center>
+                <center><div style="padding: 5px;font-size: 14px" id="regopensdiv">Availability: <span id=availabletext><%= parseInt(capacity)-parseInt(registered)%></span></div></center>
+                <div style="padding: 5px;font-size: 20px" id="eventdesc"><%= desc%></div>
+            </section>
+        </section>
+        <script type="text/javascript" src="menujs"></script>
+        <script type="text/javascript" src="logoutjs"></script>
+        <script>
+            var registerbutton=document.getElementById("registerbutton");
+            var availabletext=document.getElementById("availabletext");
+            var setRegistered=<%= setRegistered%>
+            if(setRegistered=="1"){
+                registerbutton.innerHTML="UNREGISTER";
+            }
+            else{
+                registerbutton.innerHTML="REGISTER";
+            }
+            registerbutton.addEventListener('click',()=>{
+                if(setRegistered=="1"){
+                   var xmlhttp = new XMLHttpRequest();
+                    var url = "removeRegistration";
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            registerbutton.innerHTML="REGISTER";
+                            availabletext.innerHTML=String(parseInt(availabletext.innerHTML)+1);
+                            setRegistered="0";
+                        }
+                    };
+                    xmlhttp.open("POST", url, true);
+                    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xmlhttp.send("eid=<%= eid%>");
+                }
+                else{
+                   var xmlhttp = new XMLHttpRequest();
+                    var url = "addRegistration";
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            registerbutton.innerHTML="UNREGISTER";
+                            availabletext.innerHTML=String(parseInt(availabletext.innerHTML)-1);
+                            setRegistered="1";
+                        }
+                    };
+                    xmlhttp.open("POST", url, true);
+                    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xmlhttp.send("eid="+"<%= eid%>");
+                }
+            });
+            function increasePage(){
+                document.getElementById("eventViewContent").style.width="100%";
+            }
+            function decreasePage(){
+                document.getElementById("eventViewContent").style.width="80%";
+            }
+        </script>
+    </body>
+</html>

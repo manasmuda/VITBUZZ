@@ -1,0 +1,121 @@
+header{
+    text-align: center;
+    background: #ff3300;
+    width: all;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.homePage{
+    display: flex;
+}
+
+#title{
+    transition: width 1s;
+}
+
+#menu{
+    background: #333333;
+    width: 20%;
+    height: 650px;
+    transition: width 1s;
+    z-index: 1;
+}
+
+
+#headerNav{
+    background: #ffffff;
+    width:all; 
+    display:flex;
+    border-style: solid;
+    border: 1;
+    border-color: #ff3300;
+}
+
+#homeContent{
+    z-index: 2;
+    background: #AAAAAA;
+    height: 610px;
+    width: 80%;
+    padding: 20px;
+    overflow-y: auto;
+    transition: width 1s;
+}
+
+.menuItem{
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    color: #ffffff;
+}
+
+.menuItem button{
+    position: relative;
+    padding: 5px;
+    left: 50%;
+    font-size: 20px;
+    background: #333333;
+    color: #ffffff;
+    border: none;
+    transform: translate(-60%,0);
+}
+
+.pager object{
+    overflow: hidden;
+    width: 190px;
+    height: 250px;
+    padding-right: 20px;
+}
+
+.pager{
+    max-width: 1300px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    transition: width 2s;
+    
+}
+
+.pager::-webkit-scrollbar{
+    display: none;
+}
+
+.pager .pagerItem{
+    margin-right:30px;
+    margin-bottom:10px;
+    display:inline-block;
+    height:230px;
+    width:170px;
+    border-style:solid;
+    border-width:2px;
+    border-radius:10px;
+    border-color:#ff3300;
+    background: #ffffff;
+}
+
+.pagerItemImg{
+    height: 60%;
+}
+
+.pagerItemInfo{
+    background: #ffffff;
+    height: 30%;
+    width: 160px;
+    color: #000000;
+    text-align: center;
+    padding-top: 20px;
+    text-overflow: clip;
+   overflow: hidden;
+}
+
+.pagerItemImg img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border-width:1px;
+    border-color:#ff3300;
+}
+
